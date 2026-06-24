@@ -13,10 +13,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f0f2f5] p-6">
-      <div className="grid w-full max-w-5xl lg:grid-cols-2 gap-10 items-center">
-        <Card className="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-black/5">
-          <div className="max-w-sm mx-auto w-full">
+    <div className="min-h-screen flex items-center justify-center bg-[#f0f2f5] px-4 py-6">
+      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl">
+        <Card className="bg-white w-full p-6 sm:p-8 md:p-10 rounded-xl shadow-xl border border-black/5">
+          <div className="w-full">
             <div className="flex flex-col">
               <h1 className="text-4xl font-extrabold mb-2 text-[#1877f2]">
                 BiblioDrop
@@ -30,35 +30,33 @@ export default function RegisterPage() {
               <Input
                 type="text"
                 label="Full Name"
-                placeholder="enter your name"
-                className={"px-24 py-2.5 border rounded-3xl"}
+                placeholder="Enter your name"
+                className="w-full border-2  p-3 rounded-2xl"
                 variant="bordered" />
 
               <Input
                 type="email"
                 label="Email"
-                placeholder="maill@example.com"
-                className={"px-24 py-2.5 border rounded-3xl"}
+                placeholder="mail@example.com"
+                className="w-full border-2  rounded-2xl p-3"
                 variant="bordered" />
 
               <Input
                 type="password"
                 label="Password"
                 placeholder="••••••••"
-                className={"px-24 py-2.5 border rounded-3xl"}
-                variant="bordered" />
+                className="w-full border-2  rounded-2xl p-3"
+                variant="bordered"/>
 
               <Input
                 type="password"
                 label="Confirm Password"
                 placeholder="••••••••"
-                className={"px-24 py-2.5 border rounded-3xl"}
-                variant="bordered"/>
+                className="w-full border-2  rounded-2xl p-3 "
+                variant="bordered"
+              />
 
-              <Button
-                type="submit"
-                className="w-full !bg-[#42b72a] text-white h-12 font-semibold"
-              >
+              <Button type="submit"className="w-full !bg-[#42b72a] text-white h-12 font-semibold" >
                 Create Account
               </Button>
             </form>
@@ -71,7 +69,8 @@ export default function RegisterPage() {
 
             <Button
               variant="bordered"
-              className="w-full h-12 flex items-center justify-center gap-2 bg-amber-100">
+              className="w-full h-12 flex items-center justify-center gap-2 bg-amber-100"
+            >
               <FcGoogle size={20} />
               Sign up with Google
             </Button>
@@ -80,6 +79,7 @@ export default function RegisterPage() {
               <span className="text-sm text-gray-500">
                 Already have an account?{" "}
               </span>
+
               <Link
                 href="/login"
                 className="text-[#1877f2] font-medium hover:underline">

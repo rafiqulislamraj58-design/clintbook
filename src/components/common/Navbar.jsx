@@ -33,8 +33,7 @@ export default function Navbar() {
         
         <Link
           href="/"
-          className="flex items-center gap-2 text-2xl font-extrabold text-blue-600"
-        >
+          className="flex items-center gap-2 text-2xl font-extrabold text-blue-600">
           <span>.</span>
           <span>BiblioDrop</span>
         </Link>
