@@ -4,18 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { FiMenu, FiX, FiLogOut, FiUser } from 'react-icons/fi';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/context/AuthProvider';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { user, isAuthenticated, logout } = useAuth();
-
+  const { user, isAuthenticated, logout, loading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setIsOpen(false);
     router.push('/');
   };
@@ -59,32 +57,26 @@ export default function Navbar() {
                 </button>
 
                 <div className="absolute left-0 mt-2 hidden w-52 rounded-xl border bg-white shadow-lg group-hover:block">
-                  {user?.role === 'user' && (
-                    <Link
-                      href="/dashboard/user"
-                      className="block px-4 py-3 hover:bg-gray-100"
-                    >
-                      My Dashboard
-                    </Link>
-                  )}
+                  <Link
+                    href="/dashboard"
+                    className="block px-4 py-3 hover:bg-gray-100"
+                  >
+                    My Dashboard
+                  </Link>
 
-                  {user?.role === 'librarian' && (
-                    <Link
-                      href="/dashboard/librarian"
-                      className="block px-4 py-3 hover:bg-gray-100"
-                    >
-                      Librarian Dashboard
-                    </Link>
-                  )}
+                  <Link
+                    href="/dashboard/wishlist"
+                    className="block px-4 py-3 hover:bg-gray-100"
+                  >
+                    My Wishlist
+                  </Link>
 
-                  {user?.role === 'admin' && (
-                    <Link
-                      href="/dashboard/admin"
-                      className="block px-4 py-3 hover:bg-gray-100"
-                    >
-                      Admin Dashboard
-                    </Link>
-                  )}
+                  <Link
+                    href="/dashboard/borrowed"
+                    className="block px-4 py-3 hover:bg-gray-100"
+                  >
+                    Borrowed Books
+                  </Link>
                 </div>
               </li>
 
@@ -94,15 +86,16 @@ export default function Navbar() {
                 </div>
 
                 <span className="font-medium text-gray-700">
-                  {user?.name}
+                  {user?.name || 'User'}
                 </span>
 
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-700"
+                  disabled={loading}
+                  className="flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FiLogOut />
-                  Logout
+                  {loading ? 'Logging out...' : 'Logout'}
                 </button>
               </li>
             </>
@@ -133,7 +126,7 @@ export default function Navbar() {
               <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
-                className="block py-2"
+                className="block py-2 font-medium text-gray-700"
               >
                 Home
               </Link>
@@ -141,9 +134,9 @@ export default function Navbar() {
 
             <li>
               <Link
-                href="/browse"
+                href="/books"
                 onClick={() => setIsOpen(false)}
-                className="block py-2"
+                className="block py-2 font-medium text-gray-700"
               >
                 Browse Books
               </Link>
@@ -153,20 +146,41 @@ export default function Navbar() {
               <>
                 <li>
                   <Link
-                    href={`/dashboard/${user?.role}`}
+                    href="/dashboard"
                     onClick={() => setIsOpen(false)}
-                    className="block py-2"
+                    className="block py-2 font-medium text-gray-700"
                   >
                     Dashboard
                   </Link>
                 </li>
 
                 <li>
+                  <Link
+                    href="/dashboard/wishlist"
+                    onClick={() => setIsOpen(false)}
+                    className="block py-2 font-medium text-gray-700"
+                  >
+                    Wishlist
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    href="/dashboard/borrowed"
+                    onClick={() => setIsOpen(false)}
+                    className="block py-2 font-medium text-gray-700"
+                  >
+                    Borrowed Books
+                  </Link>
+                </li>
+
+                <li className="border-t pt-2">
                   <button
                     onClick={handleLogout}
-                    className="w-full py-2 text-left text-red-600"
+                    disabled={loading}
+                    className="w-full py-2 text-left text-red-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Logout
+                    {loading ? 'Logging out...' : 'Logout'}
                   </button>
                 </li>
               </>
@@ -175,7 +189,7 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setIsOpen(false)}
-                  className="block py-2"
+                  className="block py-2 font-medium text-blue-600"
                 >
                   Login
                 </Link>

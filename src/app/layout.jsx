@@ -1,14 +1,17 @@
-import Navbar from "@/components/common/Navbar";
-import "./globals.css";
-import Footer from "@/components/common/Footer";
+import Navbar from '@/components/common/Navbar';
+import Footer from '@/components/common/Footer';
+import { AuthProvider } from '@/context/AuthProvider';
+import './globals.css';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
